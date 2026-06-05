@@ -2,7 +2,3 @@
 .idea/
 AGENTS.md
 
-# Legacy local draft skills. Do not add these to git.
-/content-to-vault/
-/xhs-extract/
-/xhs-batch/

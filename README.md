@@ -69,3 +69,14 @@ Obsidian 笔记
 - 内容包格式：[`docs/content-package-schema.md`](docs/content-package-schema.md)
 - 新增内容来源：[`docs/adding-extractor.md`](docs/adding-extractor.md)
 - 小红书 MCP 已知问题：[`docs/xhs-mcp-known-issues.md`](docs/xhs-mcp-known-issues.md)
+
+## 项目依赖
+
+| 依赖 | 用途                                 | 必需性 | 来源 |
+|------|------------------------------------|--------|------|
+| Hermes Agent | 运行 skills、调用内置工具、管理 MCP 和 cron 批处理 | 必需 | [Hermes Agent 文档](https://hermes-agent.nousresearch.com/docs) |
+| Obsidian | 写入并管理归档笔记                          | 必需 | [Obsidian](https://obsidian.md/) |
+| xiaohongshu-mcp | 小红书帖子结构化数据提取和登录态管理                 | 小红书提取需要 | [xiaohongshu-mcp](https://github.com/xpzouying/xiaohongshu-mcp) |
+| OpenAI Whisper | 视频和音频内容转录                          | 视频转录需要 | [OpenAI Whisper](https://github.com/openai/whisper) |
+| ffmpeg | 视频/音频处理，配合 Whisper 完成转录            | 视频转录需要 | [ffmpeg](https://ffmpeg.org/) |
+| llm-wiki skill | 可选的长期知识沉淀适配                        | 可选 | [llm-wiki](https://hermes-agent.nousresearch.com/docs/user-guide/skills/bundled/research/research-llm-wiki) |

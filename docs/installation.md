@@ -26,7 +26,7 @@ Hermes 会递归发现 repo 内所有 `SKILL.md`，无需手动注册。
 OBSIDIAN_VAULT_PATH=/Users/yourname/ObsidianVault
 
 # 提取内容的基础存储目录
-# 各 extractor 自动在其下创建子目录：$EXTRACT_OUTPUT_DIR/xhs/、$EXTRACT_OUTPUT_DIR/youtube/ 等
+# 各 extractor 自动在其下创建子目录：$EXTRACT_OUTPUT_DIR/xhs/、$EXTRACT_OUTPUT_DIR/video/ 等
 EXTRACT_OUTPUT_DIR=/Users/yourname/Documents/extract_files
 ```
 
@@ -114,6 +114,38 @@ ffmpeg -version
 
 ---
 
+## 可选：安装 yt-dlp
+
+YouTube / Bilibili 视频音频提取依赖 [yt-dlp](https://github.com/yt-dlp/yt-dlp)。不使用 `web-video-extract` 可跳过。
+
+### 安装
+
+```bash
+pip install -U yt-dlp
+```
+
+macOS 也可以用 Homebrew：
+
+```bash
+brew install yt-dlp
+```
+
+默认流程会读取 Chrome 登录态：
+
+```bash
+yt-dlp --cookies-from-browser chrome -J "https://www.youtube.com/watch?v=..."
+```
+
+如果使用其他浏览器，把 `chrome` 改为 `brave`、`chromium`、`edge`、`firefox`、`opera`、`safari`、`vivaldi` 或 `whale`。
+
+### 验证
+
+```bash
+yt-dlp --version
+```
+
+---
+
 ## 依赖总览
 
 | 依赖 | 用途 | 必需？ |
@@ -122,4 +154,5 @@ ffmpeg -version
 | LLM provider | VLM 图片分析、笔记生成、分类 | ✅ |
 | Search provider | 溯源搜索（`web_search`） | ✅ |
 | xiaohongshu-mcp | 小红书帖子数据提取 | 小红书提取需要 |
+| yt-dlp | YouTube / Bilibili 元数据提取和音频下载 | Web 视频提取需要 |
 | Whisper CLI + ffmpeg | 视频/音频字幕转录 | 视频转录需要 |

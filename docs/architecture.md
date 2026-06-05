@@ -10,6 +10,7 @@ everything-to-obsidian/
 ├── batch-url-to-vault/    # 批量入口 / cron job 编排
 ├── content-to-vault/      # 内容包 → Obsidian 归档
 ├── xhs-extract/           # 小红书 extractor
+├── web-video-extract/     # YouTube / Bilibili 视频音频 extractor
 └── docs/                  # 项目文档
 ```
 
@@ -26,14 +27,14 @@ everything-to-obsidian/
                   │  (router)        │
                   └──────┬───────────┘
                          │ 匹配 pattern → 选 extractor
-          ┌──────────────┼──────────────┐
-          ▼              ▼              ▼
-   ┌────────────┐ ┌────────────┐ ┌────────────┐
-   │ xhs-extract│ │ (future)   │ │ (future)   │  ← 上游提取器
-   │ 小红书      │ │ youtube    │ │ web/pdf    │
-   └─────┬──────┘ └─────┬──────┘ └─────┬──────┘
-         │              │              │
-         └──────────────┼──────────────┘
+          ┌──────────────┼─────────────────┐
+          ▼              ▼                 ▼
+   ┌────────────┐ ┌─────────────────┐ ┌────────────┐
+   │ xhs-extract│ │web-video-extract│ │ (future)   │  ← 上游提取器
+   │ 小红书      │ │YouTube/Bilibili │ │ web/pdf    │
+   └─────┬──────┘ └────────┬────────┘ └─────┬──────┘
+         │                 │                │
+         └─────────────────┼────────────────┘
                         │ output_dir (output.json + content.md)
                         ▼
                ┌──────────────────┐

@@ -7,7 +7,7 @@ license: MIT
 metadata:
   hermes:
     tags: [url-router, content-pipeline, automation]
-    related_skills: [content-to-vault, xhs-extract]
+    related_skills: [content-to-vault, xhs-extract, web-video-extract]
 ---
 
 # url-to-vault — 单链接路由到归档
@@ -21,8 +21,9 @@ metadata:
 | URL 匹配 | Extractor | 说明 |
 |----------|-----------|------|
 | `xhslink.com`、`xiaohongshu.com/discovery/item/`、`xiaohongshu.com/explore/`、`user/profile/` | `xhs-extract` | 小红书帖子 |
+| `youtube.com/watch`、`youtube.com/shorts`、`youtu.be`、`bilibili.com/video/`、`b23.tv` | `web-video-extract` | YouTube / Bilibili 视频音频转录 |
 
-> 当前只支持小红书。新增 extractor 时在此表追加一行。
+> 新增 extractor 时在此表追加一行。
 
 ## 流程
 

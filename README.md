@@ -43,6 +43,7 @@ Obsidian 笔记
 当前支持：
 
 - 小红书帖子：支持图文和视频帖子。会提取帖子正文、图片内容、视频转写、热门评论，以及必要的平台信息，并补充帖子提到的原始资料来源。也可以告诉 Agent 跳过下载图片流程，只提取文字内容。
+- YouTube / Bilibili 视频：使用 `yt-dlp` 下载音频并用 Whisper 转写，默认读取 Chrome 登录态；失败时可退回无 cookies 尝试，并按需要提示重新登录。
 
 #### 批量归档链接
 
@@ -77,6 +78,7 @@ Obsidian 笔记
 | Hermes Agent | 运行 skills、调用内置工具、管理 MCP 和 cron 批处理 | 必需 | [Hermes Agent 文档](https://hermes-agent.nousresearch.com/docs) |
 | Obsidian | 写入并管理归档笔记                          | 必需 | [Obsidian](https://obsidian.md/) |
 | xiaohongshu-mcp | 小红书帖子结构化数据提取和登录态管理                 | 小红书提取需要 | [xiaohongshu-mcp](https://github.com/xpzouying/xiaohongshu-mcp) |
+| yt-dlp | YouTube / Bilibili 元数据提取和音频下载               | Web 视频提取需要 | [yt-dlp](https://github.com/yt-dlp/yt-dlp) |
 | OpenAI Whisper | 视频和音频内容转录                          | 视频转录需要 | [OpenAI Whisper](https://github.com/openai/whisper) |
 | ffmpeg | 视频/音频处理，配合 Whisper 完成转录            | 视频转录需要 | [ffmpeg](https://ffmpeg.org/) |
 | llm-wiki skill | 可选的长期知识沉淀适配                        | 可选 | [llm-wiki](https://hermes-agent.nousresearch.com/docs/user-guide/skills/bundled/research/research-llm-wiki) |

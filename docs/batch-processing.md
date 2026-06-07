@@ -54,10 +54,10 @@ batch-url-to-vault/scripts/pick-next-url.py
 它接受 CSV 路径作为命令行参数，输出下一条待处理链接。直接调试时可以运行：
 
 ```bash
-python3 <batch-url-to-vault skill_dir>/scripts/pick-next-url.py "{CSV_PATH}"
+python3 "$HERMES_HOME/skills/everything-to-obsidian/batch-url-to-vault/scripts/pick-next-url.py" "{CSV_PATH}"
 ```
 
-`<batch-url-to-vault skill_dir>` 是 Hermes 加载 `batch-url-to-vault` 后注入的 skill 目录。
+`$HERMES_HOME` 是 Hermes 安装根目录（默认 `~/.hermes`），skill 安装在 `$HERMES_HOME/skills/` 下。
 
 ## Cron wrapper
 
@@ -70,7 +70,7 @@ Hermes cron 的 `script` 参数只接受 `~/.hermes/scripts/` 下的脚本路径
 import runpy
 import sys
 
-SCRIPT = "<batch-url-to-vault skill_dir>/scripts/pick-next-url.py"
+SCRIPT = "$HERMES_HOME/skills/everything-to-obsidian/batch-url-to-vault/scripts/pick-next-url.py"
 CSV_PATH = "<absolute path to links.csv>"
 
 sys.argv = [SCRIPT, CSV_PATH]

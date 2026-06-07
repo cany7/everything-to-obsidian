@@ -20,7 +20,7 @@ metadata:
 2. 用 `yt-dlp` 提取视频元数据并下载最佳可用音频
 3. 用 Whisper 将音频转录为文本
 4. 按内容判断是否需要溯源，并记录原始来源 URL
-5. 生成 `metadata.json`、`output.json`、`content.md`
+5. 生成 `output.json`、`content.md`
 6. 自动串联 `content-to-vault` 继续归档
 
 本 skill 只做提取和记录，不做分析、不做归档、不做总结。下游整理由 `content-to-vault` 负责。
@@ -54,15 +54,13 @@ metadata:
 ## 输出
 
 在 `$EXTRACT_OUTPUT_DIR/video/{source_type}/{title_safe}-{YYYYMMDDHHMM}/` 下生成：
-
 ```text
 {output_dir}/
 ├── output.json
-├── metadata.json
 ├── content.md
 ├── audio.m4a
-├── audio.txt
-└── audio.info.json
+├── audio.txt          # Whisper 转录文本
+└── audio.info.json    # yt-dlp 原始元数据（--write-info-json 自动产出）
 ```
 
 如果 Whisper 失败，`audio.txt` 可能不存在；仍需生成 `output.json` 和 `content.md`。
@@ -78,7 +76,7 @@ metadata:
 }
 ```
 
-允许额外写入本 extractor 自用字段，例如 `audio`、`video`、`transcription`、`tracing`、`output_dir`。下游只读取 `source_type`、`source_url`、`sources[]`、`images[]` 和 `content.md`。
+允许额外写入本 extractor 自用字段，例如 `audio`、`video_info`、`tracing`、`output_dir`。下游只读取 `source_type`、`source_url`、`sources[]`、`images[]` 和 `content.md`。
 
 ## 执行纪律
 
@@ -96,7 +94,7 @@ metadata:
 如果输入为短链，运行：
 
 ```bash
-python3 <web-video-extract skill_dir>/scripts/expand-shortlink.py "<url>"
+python3 "$HERMES_HOME/skills/everything-to-obsidian/web-video-extract/scripts/expand-shortlink.py" "<url>"
 ```
 
 用最终 URL 判断 `source_type`。无法展开时，用原始 URL 判断。
@@ -182,7 +180,6 @@ cd "{output_dir}" && whisper "<audio_file>" --model large-v3-turbo --output_form
 
 超时设置 1800 秒。超时或非零退出码时，不阻塞后续步骤：
 
-- `output.json` 写入 `"audio": {"path": "...", "transcript": null}`
 - `content.md` 的「音频转录」段写入 `> ⚠️ 音频转录失败（超时或模型未就绪）`
 - 仍继续生成内容包并交给下游归档
 
@@ -210,36 +207,23 @@ cd "{output_dir}" && whisper "<audio_file>" --model large-v3-turbo --output_form
 
 ### 第七步：生成内容包文件
 
-生成 `metadata.json`、`output.json` 和 `content.md`。`content.md` 是下游主材料；不要加入分析、总结或归档分类结论。
-
-`metadata.json` 写入：
-
-```jsonc
-{
-  "source_type": "youtube",
-  "source_url": "https://...",
-  "extracted_at": "2026-05-24T12:00:00+08:00",
-  "raw": { "yt_dlp_info": "完整 JSON 元数据" }
-}
-```
+生成 `output.json` 和 `content.md`。`content.md` 是下游主材料；不要加入分析、总结或归档分类结论。
 
 `output.json` 写入标准下游字段和本 extractor 自用字段：
-
 ```jsonc
 {
   "source_type": "youtube",
   "source_url": "https://...",
   "sources": [],
   "images": [],
-  "audio": {"path": "/abs/path/audio.m4a", "transcript": "..."},
-  "video": {
+  "audio": {"path": "/abs/path/audio.m4a"},
+  "video_info": {
     "title": "...",
     "uploader": "...",
     "upload_date": "20260524",
     "duration": 123,
     "webpage_url": "https://..."
   },
-  "transcription": {"performed": true, "reason": "completed"},
   "tracing": {"performed": false, "reason": "skipped: no external factual references"},
   "output_dir": "/abs/path/..."
 }
@@ -277,7 +261,7 @@ cd "{output_dir}" && whisper "<audio_file>" --model large-v3-turbo --output_form
 
 ## 注意事项
 
-- 不抓取评论，第一版只保留元数据、简介和音频转录。
+- 不抓取评论，只保留元数据、简介和音频转录。
 - 不分析缩略图或视频画面。
 - 不保存 cookies。
 - 批量处理时由上游 batch 入口控制间隔；本 skill 内部只设置 `yt-dlp` 的请求间隔和重试。

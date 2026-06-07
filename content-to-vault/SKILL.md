@@ -24,7 +24,6 @@ metadata:
 
 默认按快速主路径连续执行：解析 `output_dir` → 读取内容包 → 判重 → 读取或创建分类索引 → 从 `output.json` 的 `sources[]`（或 `content.md` 的溯源段）提取 URL 并 `web_extract` 补充 → 生成标题 → 生成正文（不含 frontmatter）→ 写入 `_draft.md` → 加载 `classification-guide.md` → 确定分类 → 组装最终文档 → 写入 vault → 更新 registry/index → 返回结果。
 
-- 不要使用 todo/checklist 工具管理本流程。
 - 不要在每个步骤后向用户汇报、总结或等待确认。
 - 不要为了确认正常路径而执行额外检查；只有缺文件、JSON 无效、路径不存在、写入失败等明确错误才进入失败处理。
 - `content.md` 是主要材料；`output.json` 仅读取 `source_url`、`source_type`、`sources[]` 和 `images[]`（如有）。`output.json` 中其他字段（如 `post.*`、`video`、`tracing` 等）是上游内部格式，下游忽略。
@@ -558,7 +557,7 @@ registry 只作为轻量地址簿和路径判重索引。记录 `input_dir`、`n
 
 ## 验证
 
-写入前快速确认：frontmatter、H1、摘要、来源与素材、registry 均满足规则；不要使用 checklist 工具。
+写入前快速确认：frontmatter、H1、摘要、来源与素材、registry 均满足规则。
 
 ## 返回给用户
 

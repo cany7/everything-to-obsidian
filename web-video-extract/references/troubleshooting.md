@@ -80,9 +80,6 @@ pip install openai-whisper
 ## Whisper 转录失败
 
 Whisper 超时或非零退出时不要阻塞内容包生成：
-
-- `output.json.audio.transcript = null`
-- `output.json.transcription = {"performed": false, "reason": "<错误摘要>"}`
 - `content.md` 音频转录段写入 `> ⚠️ 音频转录失败（超时或模型未就绪）`
 
 继续进入 `content-to-vault`。

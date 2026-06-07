@@ -36,7 +36,7 @@ metadata:
 本 skill 目录下的 `scripts/pick-next-url.py`，接受 CSV 路径作为命令行参数。加载本 skill 后，Hermes 会注入 `[Skill directory: .../batch-url-to-vault]`；运行脚本时用该目录解析出绝对路径：
 
 ```bash
-python3 <batch-url-to-vault skill_dir>/scripts/pick-next-url.py "{CSV_PATH}"
+python3 "$HERMES_HOME/skills/everything-to-obsidian/batch-url-to-vault/scripts/pick-next-url.py" "{CSV_PATH}"
 ```
 
 ## Cron job 配置
@@ -58,7 +58,7 @@ Wrapper 内容模板：
 ```python
 import runpy, sys
 
-SCRIPT = "<batch-url-to-vault skill_dir>/scripts/pick-next-url.py"
+SCRIPT = "$HERMES_HOME/skills/everything-to-obsidian/batch-url-to-vault/scripts/pick-next-url.py"
 CSV = "{CSV_PATH}"
 
 sys.argv = [SCRIPT, CSV]
@@ -92,7 +92,7 @@ Steps:
 4. Final response: brief summary including CONTENT, result, note title.
 ```
 
-> `script` 参数传生成后的 wrapper 文件名或绝对路径，例如 `everything-to-obsidian-pick-next-url.py`。不要把 `<batch-url-to-vault skill_dir>/scripts/pick-next-url.py {CSV_PATH}` 直接传给 cron 的 `script` 参数；cron 不会解析参数，且只允许运行 `~/.hermes/scripts/` 下的脚本。
+> `script` 参数传生成后的 wrapper 文件名或绝对路径，例如 `everything-to-obsidian-pick-next-url.py`。不要把脚本路径直接传给 cron 的 `script` 参数；cron 不会解析参数，且只允许运行 `~/.hermes/scripts/` 下的脚本。
 
 ## 断点续传
 

@@ -215,10 +215,10 @@ for i, img in enumerate(image_list):
 
 ### 第一步：解析链接
 
-**输入为短链**（`xhslink.com/...`）时，用 `terminal` 调用本 skill 目录下的 `scripts/expand-shortlink.py` 获取重定向后的完整 URL：
+**输入为短链**（`xhslink.com/...`）时，运行：
 
 ```bash
-python3 <xhs-extract skill_dir>/scripts/expand-shortlink.py "https://xhslink.com/m/xxx"
+python3 "$HERMES_HOME/skills/everything-to-obsidian/xhs-extract/scripts/expand-shortlink.py" "https://xhslink.com/m/xxx"
 # 输出：https://www.xiaohongshu.com/discovery/item/6a1fd292...?xsec_token=...
 ```
 
@@ -416,7 +416,7 @@ Cookie 从环境变量 `XIAOHONGSHU_MCP_COOKIES` 指定的 `cookies.json` 路径
 ## 注意事项
 
 - `xsec_token` 必须从分享链接获取——直接粘贴浏览器地址栏 URL 不含 token
-- 溯源由 8.0 判断是否需要——不是每条帖子都必须执行。需要时按 8.3 读取 `references/tracing-search.md`
+- 溯源由 8.0 判断是否需要——不是每条帖子都必须执行。需要时按 8.1 读取 `references/tracing-search.md`
 - `get_feed_detail` 只需要 `feed_id`/`note_id` 与 `xsec_token`——不要为了调用 MCP 或记录 `source_url` 强制转换 URL 格式
 - 批量处理见 `batch-url-to-vault` skill
 - 媒体文件不自动删除，由用户手动管理
